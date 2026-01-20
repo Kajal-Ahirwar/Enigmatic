@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <title>Sign In — Enigmatic</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div id="nav-left">
+      <div id="logo"><img src="logo.png" alt="logo"></div>
+      <div class="brand">Enigmatic</div>
+    </div>
+  </nav>
+
+  <main class="auth-container">
+    <form id="signin-form" class="auth-form" novalidate>
+      <h1>Sign In</h1>
+      <label class="field">
+        <span class="label-text">Email</span>
+        <input id="email" type="email" placeholder="you@example.com" required>
+      </label>
+
+      <label class="field">
+        <span class="label-text">Password</span>
+        <input id="password" type="password" placeholder="Enter password" required>
+      </label>
+
+      <label class="field small"><input id="remember" type="checkbox"> Remember me</label>
+
+      <button type="submit" class="btn primary">Sign In</button>
+
+      <div id="auth-msg" class="auth-msg" aria-live="polite"></div>
+
+      <p class="muted"><a href="index.html">← Back to Home</a></p>
+    </form>
+  </main>
+
+  <script src="sign-in.js"></script>
+</body>
+</html>

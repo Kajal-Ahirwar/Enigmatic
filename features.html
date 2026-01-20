@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Enigmatic — Features">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  <title>Features — Enigmatic</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div id="nav-left">
+      <div id="logo"><img src="logo.png" alt="logo"></div>
+      <div class="brand">Enigmatic</div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="sign-in.html">Sign in</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="features" id="features">
+      <h1>Features</h1>
+      <p class="muted">Tools and ideas you can expect from Enigmatic.</p>
+      <div class="cards">
+        <div class="card"><h3>Interactive Puzzles</h3><p>Daily puzzles, progressive challenges and hint systems.</p></div>
+        <div class="card"><h3>ARG Stories</h3><p>Time-gated chapters, real-world clues and branching narratives.</p></div>
+        <div class="card"><h3>Generative Art</h3><p>Canvas and shader-driven visuals users can save and share.</p></div>
+        <div class="card"><h3>Serialized Mysteries</h3><p>Choose-your-path storytelling and reveals.</p></div>
+        <div class="card"><h3>Cipher Toolkit</h3><p>Built-in solvers, encoders and clue helpers.</p></div>
+        <div class="card"><h3>Community Challenges</h3><p>Submit puzzles, vote and compete on leaderboards.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>© Enigmatic — built for curiosity.</div>
+  </footer>
+
+  <style>
+    .card.pop{ transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: transform .18s ease, box-shadow .18s ease; }
+    .feature-flash{ position: fixed; right: 20px; bottom: 20px; background:#111; color:#fff; padding:10px 14px; border-radius:8px; opacity:0; transform: translateY(8px); transition:opacity .25s, transform .25s; z-index:9999 }
+    .feature-flash.show{ opacity:1; transform: translateY(0); }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const container = document.querySelector('.cards');
+
+      const extra = {
+        'Interactive Puzzles': [
+          {title:'Adaptive Hints', desc:'Hints that scale to player skill and progress.'},
+          {title:'Puzzle Editor', desc:'Create and share your own puzzles.'}
+        ],
+        'ARG Stories': [
+          {title:'Live Events', desc:'Time-limited live story events and puzzles.'},
+          {title:'Collector Items', desc:'Unlockables tied to story milestones.'}
+        ],
+        'Generative Art': [
+          {title:'Export Presets', desc:'Save generator settings and export images.'},
+          {title:'Shader Playground', desc:'Try and tweak shaders in real-time.'}
+        ],
+        'Serialized Mysteries': [
+          {title:'Branch Metrics', desc:'Track choices and popular story branches.'}
+        ],
+        'Cipher Toolkit': [
+          {title:'Custom Alphabets', desc:'Create and test custom cipher alphabets.'}
+        ],
+        'Community Challenges': [
+          {title:'Team Modes', desc:'Collaborative puzzles with shared progress.'}
+        ]
+      };
+
+      const globalPool = [
+        {title:'Achievements', desc:'Earn badges for milestones and discoveries.'},
+        {title:'Offline Mode', desc:'Download puzzles to play offline.'},
+        {title:'Voice Clues', desc:'Audio clues and narrated hints.'}
+      ];
+
+      function flash(msg){
+        let f = document.querySelector('.feature-flash');
+        if(!f){ f = document.createElement('div'); f.className='feature-flash'; document.body.appendChild(f); }
+        f.textContent = msg;
+        f.classList.add('show');
+        clearTimeout(f._t);
+        f._t = setTimeout(()=> f.classList.remove('show'), 1700);
+      }
+
+      function createCard(item){
+        const d = document.createElement('div'); d.className = 'card';
+        const h = document.createElement('h3'); h.textContent = item.title;
+        const p = document.createElement('p'); p.textContent = item.desc;
+        d.appendChild(h); d.appendChild(p);
+        d.addEventListener('click', onCardClick);
+        return d;
+      }
+
+      function onCardClick(e){
+        const el = this;
+        const title = (el.querySelector('h3') || {}).textContent || '';
+        const pool = (extra[title] && extra[title].length) ? extra[title] : (globalPool.length ? globalPool : null);
+        if(!pool){ flash('No more features to add'); return; }
+        const next = pool.shift();
+        const newCard = createCard(next);
+        container.appendChild(newCard);
+        // tiny pop animation
+        requestAnimationFrame(()=> newCard.classList.add('pop'));
+        setTimeout(()=> newCard.classList.remove('pop'), 600);
+        flash('Feature added: ' + next.title);
+      }
+
+      // bind existing cards
+      document.querySelectorAll('.cards .card').forEach(card=> card.addEventListener('click', onCardClick));
+    });
+  </script>
+
+</body>
+</html>
